@@ -73,4 +73,36 @@ price_missing_by_room <- table(
 )
 
 price_missing_by_room
+# Calculating percentages within each room type
+prop.table(price_missing_by_room, margin = 1) * 100
+
+
+#Price Distribution and Potential Outliers
+# Examining descriptive statistics for numerical prices
+summary(airbnb_clean$price_numeric)
+
+#Visualisating the price distribution
+# Histogram of Airbnb prices
+ggplot(airbnb_clean, aes(x = price_numeric)) +
+  geom_histogram(bins = 30,
+                 fill = "lightblue",
+                 color = "black") +
+  labs(title = "Distribution of Airbnb Prices in Dublin",
+       x = "Listed Price",
+       y = "Number of Listings") +
+  theme_minimal()
+
+
+# Focused Price Distribution
+
+ggplot(airbnb_clean, aes(x = price_numeric)) +
+  geom_histogram(binwidth = 50,
+                 fill = "lightblue",
+                 color = "black",
+                 na.rm = TRUE) +
+  coord_cartesian(xlim = c(0, 1000)) +
+  labs(title = "Dublin Airbnb Prices: Focused Distribution",
+       x = "Listed Price ($)",
+       y = "Number of Listings") +
+  theme_minimal()
 
