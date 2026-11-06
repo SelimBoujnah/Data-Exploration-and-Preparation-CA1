@@ -106,3 +106,10 @@ ggplot(airbnb_clean, aes(x = price_numeric)) +
        y = "Number of Listings") +
   theme_minimal()
 
+# Detecting outliers
+# Creating a boxplot to identify potential price outliers
+ggplot(airbnb_clean, aes(y = price_numeric)) +
+  geom_boxplot(fill = "lightblue", color = "black", na.rm = TRUE) +
+  labs(title = "Dublin Airbnb Price Outliers",
+       y = "Listed Price ($)") +
+  theme_minimal()
