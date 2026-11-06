@@ -105,7 +105,7 @@ ggplot(airbnb_clean, aes(x = price_numeric)) +
        x = "Listed Price ($)",
        y = "Number of Listings")
 
-# Count listings with prices above 1000
+# Counting listings with prices above 1000
 sum(airbnb_clean$price_numeric > 1000, na.rm = TRUE)
 
 # Detecting outliers
@@ -138,7 +138,7 @@ upper_limit
 
 # Counting potential price outliers
 
-# Count prices above the upper IQR threshold
+# Counting prices above the upper IQR threshold
 sum(airbnb_clean$price_numeric > upper_limit, na.rm = TRUE)
 
 # Count prices below the lower IQR threshold
@@ -146,12 +146,24 @@ sum(airbnb_clean$price_numeric < lower_limit, na.rm = TRUE)
 
 
 # Investigating potential price outliers
-# Select listings above the upper IQR threshold
+# Selecting listings above the upper IQR threshold
 price_outliers <- filter(airbnb_clean, price_numeric > upper_limit)
 
-# Examine selected characteristics of these listings
+# Examining selected characteristics of these listings
 head(select(price_outliers, id, room_type, property_type,
             accommodates, bedrooms, price_numeric))
 
-# Examine descriptive statistics of the outlier prices
+# Examining descriptive statistics of the outlier prices
 summary(price_outliers$price_numeric)
+
+
+# Investigating the highest-priced listing
+# Finding the maximum recorded price
+highest_price <- max(airbnb_clean$price_numeric, na.rm = TRUE)
+
+# Selecting listing(s) with the highest price
+highest_listing <- filter(airbnb_clean, price_numeric == highest_price)
+
+# Examining their characteristics
+select(highest_listing, id, name, room_type, property_type,
+       accommodates, bedrooms, minimum_nights, price_numeric)
