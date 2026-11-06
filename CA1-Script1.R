@@ -116,3 +116,23 @@ ggplot(airbnb_clean, aes(x = "All Listings", y = price_numeric)) +
   labs(title = "Dublin Airbnb Prices: Focused Boxplot",
        x = "",
        y = "Listed Price ($)")
+
+#IQR Outlier Detection
+
+# Calculating the first and third quartiles
+q1 <- quantile(airbnb_clean$price_numeric, 0.25, na.rm = TRUE)
+q3 <- quantile(airbnb_clean$price_numeric, 0.75, na.rm = TRUE)
+
+# Calculating the interquartile range
+price_iqr <- IQR(airbnb_clean$price_numeric, na.rm = TRUE)
+
+# Calculating the lower and upper outlier thresholds
+lower_limit <- q1 - 1.5 * price_iqr
+upper_limit <- q3 + 1.5 * price_iqr
+
+# Displaying the results
+q1
+q3
+price_iqr
+lower_limit
+upper_limit
