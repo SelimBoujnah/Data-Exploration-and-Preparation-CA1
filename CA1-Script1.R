@@ -199,3 +199,50 @@ filter(airbnb_clean, minimum_nights == 999) %>%
 
 # Examining property types of listings with zero bedrooms
 table(airbnb_clean$property_type[airbnb_clean$bedrooms == 0])
+
+# Checking missing values in selected features
+# Selecting relevant variables for further analysis
+selected_features <- airbnb_clean[, c(
+  "price_numeric",
+  "room_type",
+  "property_type",
+  "neighbourhood_cleansed",
+  "accommodates",
+  "bedrooms",
+  "beds",
+  "minimum_nights",
+  "availability_365",
+  "number_of_reviews"
+)]
+
+# Checking missing values in each selected feature
+colSums(is.na(selected_features))
+
+
+# Checking the dimensions
+dim(selected_features)
+
+#trying to detect the empty fields
+# Checking empty strings 
+sum(airbnb$price == "")
+
+# Checking room type
+sum(selected_features$room_type == "", na.rm = TRUE)
+
+# Checking property type
+sum(selected_features$property_type == "", na.rm = TRUE)
+
+# Checking neighbourhood
+sum(selected_features$neighbourhood_cleansed == "", na.rm = TRUE)
+
+# Detecting empty strings across all character columns
+empty_counts <- sapply(airbnb, function(x) {
+  if (is.character(x)) {
+    sum(trimws(x) == "", na.rm = TRUE)
+  } else {
+    0
+  }
+})
+
+# Display only columns containing empty strings
+empty_counts[empty_counts > 0]
