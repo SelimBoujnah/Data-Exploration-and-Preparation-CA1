@@ -167,3 +167,15 @@ highest_listing <- filter(airbnb_clean, price_numeric == highest_price)
 # Examining their characteristics
 select(highest_listing, id, name, room_type, property_type,
        accommodates, bedrooms, minimum_nights, price_numeric)
+
+
+# Inspecting other numerical variables
+# Examining descriptive statistics and missing values
+summary(airbnb_clean[, c(
+  "accommodates",
+  "bedrooms",
+  "beds",
+  "minimum_nights",
+  "availability_365",
+  "number_of_reviews"
+)])
