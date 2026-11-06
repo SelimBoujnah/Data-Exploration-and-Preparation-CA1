@@ -179,3 +179,13 @@ summary(airbnb_clean[, c(
   "availability_365",
   "number_of_reviews"
 )])
+
+# Investigating unusual minimum-night values
+# Counting listings with a minimum stay of 999 nights
+sum(airbnb_clean$minimum_nights == 999, na.rm = TRUE)
+
+# Counting listings requiring more than 30 nights
+sum(airbnb_clean$minimum_nights > 30, na.rm = TRUE)
+
+# Counting listings with zero bedrooms
+sum(airbnb_clean$bedrooms == 0, na.rm = TRUE)
