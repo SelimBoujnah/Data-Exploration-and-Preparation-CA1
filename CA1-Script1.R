@@ -103,8 +103,10 @@ ggplot(airbnb_clean, aes(x = price_numeric)) +
   coord_cartesian(xlim = c(0, 1000)) +
   labs(title = "Dublin Airbnb Prices: Focused Distribution",
        x = "Listed Price ($)",
-       y = "Number of Listings") +
-  theme_minimal()
+       y = "Number of Listings")
+
+# Count listings with prices above 1000
+sum(airbnb_clean$price_numeric > 1000, na.rm = TRUE)
 
 # Detecting outliers
 # Creating a boxplot to identify potential price outliers
