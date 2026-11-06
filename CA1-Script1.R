@@ -135,3 +135,23 @@ q3
 price_iqr
 lower_limit
 upper_limit
+
+# Counting potential price outliers
+
+# Count prices above the upper IQR threshold
+sum(airbnb_clean$price_numeric > upper_limit, na.rm = TRUE)
+
+# Count prices below the lower IQR threshold
+sum(airbnb_clean$price_numeric < lower_limit, na.rm = TRUE)
+
+
+# Investigating potential price outliers
+# Select listings above the upper IQR threshold
+price_outliers <- filter(airbnb_clean, price_numeric > upper_limit)
+
+# Examine selected characteristics of these listings
+head(select(price_outliers, id, room_type, property_type,
+            accommodates, bedrooms, price_numeric))
+
+# Examine descriptive statistics of the outlier prices
+summary(price_outliers$price_numeric)
