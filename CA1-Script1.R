@@ -180,7 +180,7 @@ summary(airbnb_clean[, c(
   "number_of_reviews"
 )])
 
-# Investigating unusual minimum-night values
+# Investigating unusual minimum night values
 # Counting listings with a minimum stay of 999 nights
 sum(airbnb_clean$minimum_nights == 999, na.rm = TRUE)
 
@@ -189,3 +189,13 @@ sum(airbnb_clean$minimum_nights > 30, na.rm = TRUE)
 
 # Counting listings with zero bedrooms
 sum(airbnb_clean$bedrooms == 0, na.rm = TRUE)
+
+
+# Investigating unusual accommodation values
+# Examining the listing requiring 999 minimum nights
+filter(airbnb_clean, minimum_nights == 999) %>%
+  select(id, name, room_type, property_type,
+         minimum_nights, availability_365)
+
+# Examining property types of listings with zero bedrooms
+table(airbnb_clean$property_type[airbnb_clean$bedrooms == 0])
