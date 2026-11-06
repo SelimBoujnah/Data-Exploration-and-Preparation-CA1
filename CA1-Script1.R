@@ -111,5 +111,4 @@ ggplot(airbnb_clean, aes(x = price_numeric)) +
 ggplot(airbnb_clean, aes(y = price_numeric)) +
   geom_boxplot(fill = "lightblue", color = "black", na.rm = TRUE) +
   labs(title = "Dublin Airbnb Price Outliers",
-       y = "Listed Price ($)") +
-  theme_minimal()
+       y = "Listed Price ($)") 
