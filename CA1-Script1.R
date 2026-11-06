@@ -81,7 +81,7 @@ prop.table(price_missing_by_room, margin = 1) * 100
 # Examining descriptive statistics for numerical prices
 summary(airbnb_clean$price_numeric)
 
-#Visualisating the price distribution
+#Visualising the price distribution
 # Histogram of Airbnb prices
 ggplot(airbnb_clean, aes(x = price_numeric)) +
   geom_histogram(bins = 30,
@@ -118,7 +118,6 @@ ggplot(airbnb_clean, aes(x = "All Listings", y = price_numeric)) +
        y = "Listed Price ($)")
 
 #IQR Outlier Detection
-
 # Calculating the first and third quartiles
 q1 <- quantile(airbnb_clean$price_numeric, 0.25, na.rm = TRUE)
 q3 <- quantile(airbnb_clean$price_numeric, 0.75, na.rm = TRUE)
