@@ -26,8 +26,8 @@ str(airbnb[, c("id", "room_type",
 # Checking the price data type
 class(airbnb$price)
 
-# Step 2: Initial Data Quality Check
 
+# Step 2: Initial Data Quality Check
 # Check missing values in selected columns
 sum(is.na(airbnb$price))
 sum(is.na(airbnb$bedrooms))
