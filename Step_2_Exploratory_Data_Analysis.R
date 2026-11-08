@@ -100,12 +100,6 @@ ggplot(airbnb_price_eda,
 cor(airbnb_price_eda$accommodates,
     airbnb_price_eda$price_numeric)
 
-# Spearman correlation
-cor(airbnb_price_eda$accommodates,
-    airbnb_price_eda$price_numeric,
-    method = "spearman")
-
-
 
 
 # Question 4:How is Airbnb listing availability distributed across Dublin?
@@ -161,3 +155,67 @@ room_type_by_area
 
 # Calculate percentages within each area
 round(prop.table(room_type_by_area, margin = 1) * 100, 1)
+
+
+
+# Additional EDA: Numerical Correlation Analysis
+# Selecting numerical features for correlation analysis
+numeric_eda <- airbnb_price_eda %>%
+  select(
+    price_numeric,
+    accommodates,
+    bedrooms,
+    beds,
+    minimum_nights,
+    availability_365,
+    number_of_reviews
+  )
+
+# Checking missing values
+colSums(is.na(numeric_eda))
+
+# Checking the number of complete observations
+sum(complete.cases(numeric_eda))
+
+# Creating a dataset with complete numerical observations
+numeric_complete <- na.omit(numeric_eda)
+
+# Checking dimensions
+dim(numeric_complete)
+
+# Calculating Pearson correlation matrix (Lecture 6)
+correlation_matrix <- cor(numeric_complete)
+
+# Displaying correlations rounded to two decimal places
+round(correlation_matrix, 2)
+
+
+# Correlation Heatmap
+
+# Convert correlation matrix into a format suitable for ggplot
+correlation_data <- as.data.frame(
+  as.table(round(correlation_matrix, 2))
+)
+
+# Visualise correlations using a heatmap
+ggplot(correlation_data, aes(x = Var1, y = Var2, fill = Freq)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = Freq), size = 3) +
+  scale_fill_gradient2(
+    low = "red",
+    mid = "white",
+    high = "darkblue",
+    midpoint = 0,
+    limits = c(-1, 1)
+  ) +
+  labs(
+    title = "Correlation Heatmap - Dublin Airbnb",
+    x = "",
+    y = "",
+    fill = "Correlation"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid = element_blank()
+  )

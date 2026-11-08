@@ -311,16 +311,20 @@ class(airbnb_price_eda$price_numeric)
 
 # Visualising Distributions of Selected Numerical Features
 # Reshape selected numerical variables for comparison
-distribution_data <- selected_features %>%
-  select(accommodates, bedrooms, beds,
-         minimum_nights, availability_365,
-         number_of_reviews) %>%
-  pivot_longer(
-    cols = everything(),
-    names_to = "Feature",
-    values_to = "Value"
-  )
+# Reshape numerical features into long format
 
+distribution_data <- reshape2::melt(
+  selected_features[, c(
+    "accommodates",
+    "bedrooms",
+    "beds",
+    "minimum_nights",
+    "availability_365",
+    "number_of_reviews"
+  )],
+  variable.name = "Feature",
+  value.name = "Value"
+)
 # Create a grid of histograms
 ggplot(distribution_data, aes(x = Value)) +
   geom_histogram(
