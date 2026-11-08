@@ -40,7 +40,7 @@ summary(
   filter(airbnb_price_eda, room_type == "Hotel room")$price_numeric
 )
 
-# Research Question 2: How do recorded Airbnb prices vary across Dublin neighbourhoods?
+# Question 2: How do recorded Airbnb prices vary across Dublin neighbourhoods?
 # Exploring Neighbourhood Frequencies
 
 # Counting listings by neighbourhood
@@ -79,3 +79,18 @@ summary(
 summary(
   filter(airbnb_price_eda, neighbourhood_cleansed == "South Dublin")$price_numeric
 )
+
+
+# Question 3: Is accommodation capacity associated with recorded Airbnb prices?
+
+# Scatterplot comparing guest capacity and listed prices
+ggplot(airbnb_price_eda,
+       aes(x = accommodates, y = price_numeric)) +
+  geom_point(color = "darkblue", alpha = 0.3) +
+  coord_cartesian(ylim = c(0, 1000)) +
+  labs(
+    title = "Dublin Airbnb Prices vs Accommodation Capacity",
+    x = "Number of Guests Accommodated",
+    y = "Listed Price"
+  ) +
+  theme_minimal()
