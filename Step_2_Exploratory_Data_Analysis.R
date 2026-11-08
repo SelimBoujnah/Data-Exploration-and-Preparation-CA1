@@ -131,3 +131,33 @@ sum(selected_features$availability_365 == 0)
 
 # Counting listings with 300 or more available days
 sum(selected_features$availability_365 >= 300)
+
+
+# Question 5: How does Airbnb room-type composition vary across Dublin areas?
+# 100% Stacked Bar Chart
+ggplot(selected_features,
+       aes(x = neighbourhood_cleansed, fill = room_type)) +
+  geom_bar(position = "fill", color = "white") +
+  scale_y_continuous(labels = scales::label_percent()) +
+  coord_flip() +
+  labs(
+    title = "Airbnb Room Types Across Dublin Areas",
+    x = "Local Authority Area",
+    y = "Proportion of Listings",
+    fill = "Room Type"
+  ) +
+  theme_minimal()
+
+# Calculating Room Type Percentages by Local Authority Area
+
+# Count each room type within each area
+room_type_by_area <- table(
+  selected_features$neighbourhood_cleansed,
+  selected_features$room_type
+)
+
+# Display counts
+room_type_by_area
+
+# Calculate percentages within each area
+round(prop.table(room_type_by_area, margin = 1) * 100, 1)
