@@ -309,4 +309,32 @@ class(airbnb_price_eda$price_numeric)
 # Additional missing-value treatment may be required for PCA.
 
 
+# Visualising Distributions of Selected Numerical Features
+# Reshape selected numerical variables for comparison
+distribution_data <- selected_features %>%
+  select(accommodates, bedrooms, beds,
+         minimum_nights, availability_365,
+         number_of_reviews) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "Feature",
+    values_to = "Value"
+  )
+
+# Create a grid of histograms
+ggplot(distribution_data, aes(x = Value)) +
+  geom_histogram(
+    bins = 30,
+    fill = "steelblue",
+    color = "white",
+    na.rm = TRUE
+  ) +
+  facet_wrap(~ Feature, scales = "free", ncol = 3) +
+  labs(
+    title = "Distribution of Dublin Airbnb Listing Characteristics",
+    x = "Feature Value",
+    y = "Number of Listings"
+  ) +
+  theme_minimal()
+
 
