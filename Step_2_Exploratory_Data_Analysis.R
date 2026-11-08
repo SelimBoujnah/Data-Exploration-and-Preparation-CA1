@@ -104,3 +104,30 @@ cor(airbnb_price_eda$accommodates,
 cor(airbnb_price_eda$accommodates,
     airbnb_price_eda$price_numeric,
     method = "spearman")
+
+
+
+
+# Question 4:How is Airbnb listing availability distributed across Dublin?
+# Histogram of listing availability
+ggplot(selected_features, aes(x = availability_365)) +
+  geom_histogram(
+    binwidth = 30,
+    fill = "darkblue",
+    color = "white"
+  ) +
+  labs(
+    title = "Distribution of Airbnb Availability in Dublin",
+    x = "Available Days in the Next 365 Days",
+    y = "Number of Listings"
+  ) +
+  theme_minimal()
+
+# Descriptive Statistics for Airbnb Availability
+summary(selected_features$availability_365)
+
+# Counting listings with zero available days
+sum(selected_features$availability_365 == 0)
+
+# Counting listings with 300 or more available days
+sum(selected_features$availability_365 >= 300)
