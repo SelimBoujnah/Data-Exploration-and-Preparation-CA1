@@ -103,7 +103,7 @@ ggplot(airbnb_clean, aes(x = price_numeric)) +
   coord_cartesian(xlim = c(0, 1000)) +
   labs(title = "Dublin Airbnb Prices: Focused Distribution",
        x = "Listed Price ($)",
-       y = "Number of Listings")
+       y = "Number of Listings") + theme_minimal()
 
 # Counting listings with prices above 1000
 sum(airbnb_clean$price_numeric > 1000, na.rm = TRUE)
@@ -115,7 +115,7 @@ ggplot(airbnb_clean, aes(x = "All Listings", y = price_numeric)) +
   coord_cartesian(ylim = c(0, 1000)) +
   labs(title = "Dublin Airbnb Prices: Focused Boxplot",
        x = "",
-       y = "Listed Price ($)")
+       y = "Listed Price ($)")+ theme_minimal()
 
 #IQR Outlier Detection
 # Calculating the first and third quartiles
