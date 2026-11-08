@@ -94,3 +94,13 @@ ggplot(airbnb_price_eda,
     y = "Listed Price"
   ) +
   theme_minimal()
+
+# Correlation Between Accommodation Capacity and Price
+# Pearson correlation
+cor(airbnb_price_eda$accommodates,
+    airbnb_price_eda$price_numeric)
+
+# Spearman correlation
+cor(airbnb_price_eda$accommodates,
+    airbnb_price_eda$price_numeric,
+    method = "spearman")
