@@ -259,6 +259,13 @@ dim(airbnb_price_eda)
 # Verifying there are no missing prices
 sum(is.na(airbnb_price_eda$price_numeric))
 
+# Final Dataset Validation
+# Checking remaining missing values in the price EDA dataset
+colSums(is.na(airbnb_price_eda))
+
+# Verifying the price data type
+class(airbnb_price_eda$price_numeric)
+
 # Final Data Cleaning Decisions
 
 # 1. Missing Price Values
@@ -300,4 +307,6 @@ sum(is.na(airbnb_price_eda$price_numeric))
 # especially because missing-price rates differ between room types.
 # Retaining price outliers may influence averages and other statistics.
 # Additional missing-value treatment may be required for PCA.
+
+
 
