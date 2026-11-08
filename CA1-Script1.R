@@ -246,3 +246,58 @@ empty_counts <- sapply(airbnb, function(x) {
 
 # Display only columns containing empty strings
 empty_counts[empty_counts > 0]
+
+
+
+# Preparing the dataset for price-related EDA
+# Selecting listings with recorded prices
+airbnb_price_eda <- filter(selected_features, !is.na(price_numeric))
+
+# Verifying the dimensions
+dim(airbnb_price_eda)
+
+# Verifying there are no missing prices
+sum(is.na(airbnb_price_eda$price_numeric))
+
+# Final Data Cleaning Decisions
+
+# 1. Missing Price Values
+# The dataset contains 1,706 missing prices out of 6,748 listings.
+# These values were converted from empty strings to NA.
+# Missing prices were kept in the main dataset because the
+# listings still contain useful information about other variables.
+# A separate dataset of 5,042 listings was created for price analysis.
+# Mean imputation was avoided because it could change price distributions.
+
+
+# 2. Missing Bedrooms, Beds and Minimum Nights
+# The dataset contains 7 missing bedroom values, 133 missing bed
+# values and 25 missing minimum-night values.
+# These observations were kept because the missing values do not
+# necessarily affect analyses involving other variables.
+# Missing values will be handled when the relevant features are used.
+
+
+# 3. Potential Price Outliers
+# The IQR method identified 296 prices above the upper threshold of 576.79.
+# These observations were retained because unusually expensive listings
+# may represent genuine luxury or larger accommodation properties.
+# Removing them without evidence could exclude useful information.
+# Their influence on statistical results will be considered during analysis.
+
+
+# 4. Unusual Accommodation Values
+# A total of 150 listings reported zero bedrooms.
+# These were retained because some properties may be studio apartments.
+# One listing had a minimum stay of 999 nights.
+# This value was flagged as unusual but not automatically removed,
+# because there is insufficient evidence to confirm it is incorrect.
+
+
+# 5. Limitations of the Cleaning Approach
+# Approximately 25% of listings have missing prices.
+# Excluding these listings from price analysis may introduce bias,
+# especially because missing-price rates differ between room types.
+# Retaining price outliers may influence averages and other statistics.
+# Additional missing-value treatment may be required for PCA.
+
