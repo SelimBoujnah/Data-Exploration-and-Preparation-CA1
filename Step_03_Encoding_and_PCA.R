@@ -15,3 +15,63 @@ colSums(is.na(selected_features[, c(
   "room_type",
   "neighbourhood_cleansed"
 )]))
+
+
+# One-Hot Encoding of Airbnb Categorical Features
+
+airbnb_encoded <- dummy_cols(
+  selected_features,
+  select_columns = c("room_type", "neighbourhood_cleansed"),
+  remove_selected_columns = FALSE
+)
+
+# Comparing dataset dimensions before and after encoding
+dim(selected_features)
+dim(airbnb_encoded)
+
+# Inspecting the new column names
+names(airbnb_encoded)
+
+# Preview only the newly created dummy columns
+head(airbnb_encoded[, 11:ncol(airbnb_encoded)])
+
+
+
+# Step 3.2: Preparing Numerical Features for PCA
+
+# Selecting numerical features and category labels
+pca_data <- selected_features %>%
+  select(
+    room_type,
+    neighbourhood_cleansed,
+    price_numeric,
+    accommodates,
+    bedrooms,
+    beds,
+    minimum_nights,
+    availability_365,
+    number_of_reviews
+  )
+
+# Checking missing values before PCA
+colSums(is.na(pca_data))
+
+# Creating a complete dataset for PCA
+pca_complete <- na.omit(pca_data)
+
+# Selecting only numerical features for PCA
+pca_numeric <- pca_complete %>%
+  select(
+    price_numeric,
+    accommodates,
+    bedrooms,
+    beds,
+    minimum_nights,
+    availability_365,
+    number_of_reviews
+  )
+
+# Verifying the final PCA dataset
+dim(pca_numeric)
+colSums(is.na(pca_numeric))
+summary(pca_numeric)
