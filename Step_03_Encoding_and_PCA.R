@@ -75,3 +75,29 @@ pca_numeric <- pca_complete %>%
 dim(pca_numeric)
 colSums(is.na(pca_numeric))
 summary(pca_numeric)
+
+
+# Preserve the original numerical PCA dataset
+pca_transformed <- pca_numeric
+
+# Transform highly skewed numerical features
+pca_transformed$price_numeric <- log10(
+  pca_transformed$price_numeric
+)
+
+pca_transformed$minimum_nights <- log10(
+  pca_transformed$minimum_nights
+)
+
+# Add 1 because some listings have zero reviews
+pca_transformed$number_of_reviews <- log10(
+  pca_transformed$number_of_reviews + 1
+)
+
+# Inspect the transformed variables
+summary(pca_transformed)
+
+# Confirm that all values are finite
+colSums(!is.finite(as.matrix(pca_transformed)))
+
+
