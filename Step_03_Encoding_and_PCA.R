@@ -126,4 +126,40 @@ fviz_eig(
   barcolor = "darkblue"
 )
 
+#PCA Variable Plot
+fviz_pca_var(
+  pca_result,
+  col.var = "contrib",
+  gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+  repel = TRUE
+)
+
+#PCA Biplot
+fviz_pca_biplot(
+  pca_result,
+  repel = TRUE,
+  col.var = "#2E9FDF",
+  col.ind = "#696969",
+  geom.ind = "point",
+  label = "var",
+  alpha.ind = 0.2
+)
+
+
+# PCA Biplot Focused View as the default biplot is off center
+
+fviz_pca_biplot(
+  pca_result,
+  repel = TRUE,
+  col.var = "#2E9FDF",
+  col.ind = "#696969",
+  geom.ind = "point",
+  label = "var",
+  alpha.ind = 0.2
+) +
+  coord_cartesian(
+    xlim = c(-6, 4),
+    ylim = c(-4, 5)
+  )
+
 
