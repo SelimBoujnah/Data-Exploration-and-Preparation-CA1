@@ -4,6 +4,7 @@
 
 # Loading the required package
 library(fastDummies)
+library("factoextra")
 
 # Inspecting categorical variables before encoding
 table(selected_features$room_type)
@@ -37,7 +38,7 @@ head(airbnb_encoded[, 11:ncol(airbnb_encoded)])
 
 
 
-# Step 3.2: Preparing Numerical Features for PCA
+# Preparing Numerical Features for PCA
 
 # Selecting numerical features and category labels
 pca_data <- selected_features %>%
@@ -77,6 +78,7 @@ colSums(is.na(pca_numeric))
 summary(pca_numeric)
 
 
+# Log Transformation for Skewed Features
 # Preserve the original numerical PCA dataset
 pca_transformed <- pca_numeric
 
@@ -99,5 +101,29 @@ summary(pca_transformed)
 
 # Confirm that all values are finite
 colSums(!is.finite(as.matrix(pca_transformed)))
+
+
+
+#Principal Component Analysis (PCA)
+# Applying PCA to the transformed numerical dataset
+pca_result <- prcomp(
+  pca_transformed,
+  center = TRUE,
+  scale. = TRUE
+)
+
+# Displaying the PCA result
+pca_result
+
+# Examining explained variance
+summary(pca_result)
+
+# PCA Scree Plot
+fviz_eig(
+  pca_result,
+  addlabels = TRUE,
+  barfill = "steelblue",
+  barcolor = "darkblue"
+)
 
 
