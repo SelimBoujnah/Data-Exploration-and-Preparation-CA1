@@ -40,7 +40,7 @@ summary(
   filter(airbnb_price_eda, room_type == "Hotel room")$price_numeric
 )
 
-# Question 2: How do recorded Airbnb prices vary across Dublin neighbourhoods?
+# Question 2: How do recorded Airbnb prices vary across Dublin's local authority areas ?
 # Exploring Neighbourhood Frequencies
 
 # Counting listings by neighbourhood
@@ -219,3 +219,65 @@ ggplot(correlation_data, aes(x = Var1, y = Var2, fill = Freq)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     panel.grid = element_blank()
   )
+
+
+### Interpretation of Exploratory Data Analysis
+
+# Question 1: Airbnb Prices by Room Type
+
+# Entire homes/apartments have the highest median price of 258, followed by hotel rooms at 219 and private rooms at 110.
+# Shared rooms have the lowest median price of 38.40. This suggests that accommodation type is associated with substantial differences in listed Airbnb prices.
+# However, only 10 hotel rooms have recorded prices, these findings should be interpreted with caution.
+
+
+# Question 2: Airbnb Prices by Local Authority Area
+
+# Dublin City has the highest median listed price of 192.81, followed by Dn Laoghaire-Rathdown at 178.36.
+# Fingal has a median price of 148, while South Dublin has the lowest median price of 113.
+# This suggests that Airbnb prices vary geographically.
+# However, the analysis does not establish that location alone causes these differences, as other factors may influence the prices
+
+
+# Question 3: Accommodation Capacity and Price
+
+# identified a positive relationship between accommodation capacity and listed price (r = 0.47).
+# This indicates a moderate positive linear association.
+# Listings accommodating more guests generally tend to have higher prices.
+# However, correlation does not establish causation, and extreme prices may skew the results.
+
+
+# Question 4: Airbnb Availability Distribution
+
+# A total of 1,404 listings have zero available days, while 1,345 listings have 300 or more available days.
+# This indicates considerable variation in availability across Dublin Airbnb listings.
+# Availability does not necessarily represent occupancy, as unavailable days may have different explanations (clausure for maintenance for example)
+
+
+# Question 5: Room-Type Composition and Additional Correlation Findings
+
+# Entire homes/apartments represent approximately 61.3% of listings in Dublin City and 62.1% in Dn Laoghaire-Rathdown.
+# In contrast, private rooms account for approximately 65.3% of listings in South Dublin and 53.3% in Fingal.
+# This suggests that accommodation composition differs across Dublin's local authority areas.
+# These percentages include listings with missing prices.
+
+# Additional Pearson correlation analysis identified strong positive relationships
+# between accommodates and bedrooms (r = 0.78), accommodates and beds (r = 0.78), and bedrooms and beds (r = 0.68).
+
+# Listed price showed moderate positive correlations with bedrooms (r = 0.56),
+# accommodates (r = 0.46) and beds (r = 0.41).
+# Minimum nights, availability and number of reviews showed very weak
+# linear relationships with listed price.
+
+# The strong correlations between accommodation size variables suggest overlapping information, 
+# supporting the use of PCA for dimensionality reduction.
+# However, correlation does not establish causation.
+
+
+# References
+# Iqbal, M. (2026) Data Exploration and Preparation: Lecture Notes and Tutorial Materials
+# CCT College Dublin. 
+
+# The techniques used throughout this project were studied
+# through the module lectures, tutorials and class examples.
+# I adapted These techniques and applied them to the
+# Dublin Airbnb dataset.
