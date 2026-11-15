@@ -163,3 +163,113 @@ fviz_pca_biplot(
   )
 
 
+# PCA Visualisation by room type Comparing PC1 scores across accommodation categories
+pca_room_scores <- data.frame(
+  PC1 = pca_result$x[, 1],
+  room_type = pca_complete$room_type
+)
+
+ggplot(pca_room_scores,
+       aes(x = room_type, y = PC1, fill = room_type)) +
+  geom_boxplot(outlier.alpha = 0.1) +
+  coord_cartesian(ylim = c(-6, 4)) +
+  labs(
+    title = "PC1 Scores by Airbnb Room Type (Focused View)",
+    x = "Accommodation Type",
+    y = "PC1 Score (44% of Total Variance)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+table(pca_complete$room_type)
+
+
+# PCA Heatmap by Local Authority Area
+# Standardise PC scores for comparison
+pca_area_scores <- data.frame(
+  area = pca_complete$neighbourhood_cleansed,
+  scale(pca_result$x[, 1:4])
+)
+
+# Calculate average PC scores for each area
+pca_area_means <- aggregate(
+  pca_area_scores[, c("PC1", "PC2", "PC3", "PC4")],
+  by = list(area = pca_area_scores$area),
+  FUN = mean
+)
+
+# Reshape the data for visualisation
+pca_area_long <- reshape2::melt(
+  pca_area_means,
+  id.vars = "area",
+  variable.name = "Component",
+  value.name = "MeanScore"
+)
+
+# Create the heatmap
+ggplot(pca_area_long,
+       aes(x = Component, y = area, fill = MeanScore)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(MeanScore, 2)), size = 4) +
+  scale_fill_gradient2(
+    low = "steelblue",
+    mid = "white",
+    high = "red",
+    midpoint = 0
+  ) +
+  labs(
+    title = "PCA Scores Across Dublin Local Authority Areas",
+    x = "Principal Component",
+    y = "Local Authority Area",
+    fill = "Mean PC Score"
+  ) +
+  theme_minimal() +
+  theme(panel.grid = element_blank())
+
+
+# PCA Variable Contributions
+# Contributions to Principal Component 1
+fviz_contrib(
+  pca_result,
+  choice = "var",
+  axes = 1,
+  top = 7
+)
+
+# Contributions to Principal Component 2
+fviz_contrib(
+  pca_result,
+  choice = "var",
+  axes = 2,
+  top = 7
+)
+
+
+
+# Cumulative Explained Variance
+# Supporting PCA Component Selection
+variance <- pca_result$sdev^2
+cumulative_variance <- cumsum(variance) / sum(variance) * 100
+
+variance_data <- data.frame(
+  Component = 1:7,
+  CumulativeVariance = cumulative_variance
+)
+
+ggplot(variance_data,
+       aes(x = Component, y = CumulativeVariance)) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_point(color = "darkblue", size = 3) +
+  geom_hline(yintercept = 85, linetype = "dashed",
+             color = "red") +
+  geom_point(data = subset(variance_data, Component == 4),
+             color = "red", size = 4) +
+  scale_x_continuous(breaks = 1:7) +
+  scale_y_continuous(limits = c(0, 100)) +
+  labs(
+    title = "Cumulative Explained Variance - Dublin Airbnb",
+    subtitle = "Four components retain 86.8% of total variance",
+    x = "Number of Principal Components",
+    y = "Cumulative Variance Explained (%)"
+  ) +
+  theme_minimal()
