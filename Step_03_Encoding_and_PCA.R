@@ -273,3 +273,58 @@ ggplot(variance_data,
     y = "Cumulative Variance Explained (%)"
   ) +
   theme_minimal()
+
+#PCA Dimensionality Reduction
+
+# Selecting the first four principal components
+# These components explain approximately 86.8% of total variance
+pca_reduced <- as.data.frame(pca_result$x[, 1:4])
+
+# Checking dimensions of the reduced dataset
+dim(pca_reduced)
+
+# Checking for missing values
+colSums(is.na(pca_reduced))
+
+# Previewing the reduced dataset
+head(pca_reduced)
+
+# PCA Individuals Plot
+fviz_pca_ind(
+  pca_result,
+  col.ind = "darkblue",
+  geom = "point"
+)
+### Interpretation of PCA Results
+
+# PCA was applied to seven numerical Airbnb features using 4,925 listings with complete observations.
+
+# The first principal component (PC1) explains approximately 44% of the total variance.
+# Price, accommodation capacity, bedrooms and beds have the strongest contributions to this component.
+# These variables reflect differences in listing size and price.
+
+# The second principal component (PC2) explains approximately 18.7% of the total variance.
+# Number of reviews, minimum nights and availability contribute most strongly to this component.
+# PC2 contrasts review activity with minimum-stay requirements and listing availability.
+
+# The first four principal components explain approximately 86.8% of the total variance.
+
+# As a result, I retained four components to reduce dimensionality while preserving most of the information
+# represented by the original numerical variables.
+
+# The reduced dataset contains 4,925 observations and four principal components instead of seven numerical features.
+
+# PCA simplifies the numerical dataset and highlights relationships between Airbnb listing characteristics.
+
+# However, some information is lost during dimensionality reduction, and extreme observations may still influence
+# the principal components.
+
+
+# References
+# Iqbal, M. (2026) Data Exploration and Preparation: Lecture Notes and Tutorial Materials
+# CCT College Dublin. 
+
+# The techniques used throughout this project were studied
+# through the module lectures, tutorials and class examples.
+# I adapted These techniques and applied them to the
+# Dublin Airbnb dataset.
