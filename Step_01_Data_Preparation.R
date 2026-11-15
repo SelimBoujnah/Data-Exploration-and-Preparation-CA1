@@ -1,8 +1,7 @@
 # DEP CA1 - Dublin Airbnb Dataset
 # Loading libraries 
-# 1. Load Required Libraries
+# 1. Load Required Library
 library(tidyverse)
-library(fastDummies)
 
 # Step 1: Data Import and Initial Exploration
 
@@ -341,4 +340,13 @@ ggplot(distribution_data, aes(x = Value)) +
   ) +
   theme_minimal()
 
+
+# References
+# Iqbal, M. (2026) Data Exploration and Preparation: Lecture Notes and Tutorial Materials
+# CCT College Dublin. 
+
+# The techniques used throughout this project were studied
+# through the module lectures, tutorials and class examples.
+# I adapted These techniques and applied them to the
+# Dublin Airbnb dataset.
 
