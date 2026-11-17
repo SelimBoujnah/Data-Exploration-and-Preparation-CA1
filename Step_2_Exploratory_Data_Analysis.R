@@ -40,23 +40,25 @@ summary(
   filter(airbnb_price_eda, room_type == "Hotel room")$price_numeric
 )
 
-# Question 2: How do recorded Airbnb prices vary across Dublin's local authority areas ?
-# Exploring Neighbourhood Frequencies
+# Question 2: Median Airbnb Price by Local Authority Area
 
-# Counting listings by neighbourhood
-table(airbnb_price_eda$neighbourhood_cleansed)
+median_prices <- airbnb_price_eda %>%
+  group_by(neighbourhood_cleansed) %>%
+  summarise(
+    median_price = median(price_numeric, na.rm = TRUE)
+  )
 
-# Comparing Price Distributions Across Dublin Areas
-# Boxplot comparing Airbnb prices by local authority area
-ggplot(airbnb_price_eda,
-       aes(x = neighbourhood_cleansed, y = price_numeric)) +
-  geom_boxplot(fill = "lightblue", color = "black") +
-  coord_cartesian(ylim = c(0, 1000)) +
+ggplot(median_prices,
+       aes(x = reorder(neighbourhood_cleansed, median_price),
+           y = median_price)) +
+  geom_col(fill = "lightblue", color = "black") +
+  coord_flip() +
   labs(
-    title = "Dublin Airbnb Prices by Local Authority Area",
+    title = "Median Airbnb Price by Local Authority",
     x = "Local Authority Area",
-    y = "Listed Price"
-  ) + theme_minimal()
+    y = "Median Listed Price (€)"
+  ) +
+  theme_minimal()
 
 
 # Descriptive Price Statistics by Local Authority Area
@@ -91,7 +93,7 @@ ggplot(airbnb_price_eda,
   labs(
     title = "Dublin Airbnb Prices vs Accommodation Capacity",
     x = "Number of Guests Accommodated",
-    y = "Listed Price"
+    y = "Listed Price (€)"
   ) +
   theme_minimal()
 
