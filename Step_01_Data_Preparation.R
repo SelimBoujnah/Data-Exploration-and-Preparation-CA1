@@ -1,6 +1,6 @@
 # DEP CA1 - Dublin Airbnb Dataset
 # Loading libraries 
-# 1. Load Required Library
+
 library(tidyverse)
 
 # Step 1: Data Import and Initial Exploration
@@ -35,27 +35,23 @@ sum(is.na(airbnb$review_scores_rating))
 # Checking for duplicate listing IDs
 sum(duplicated(airbnb$id))
 
-# Checking empty strings in the price column as it retrured 0 dublicates
+# Checking empty price strings separately from duplicate listing IDs
 sum(airbnb$price == "")
 
 # Displaying the first 6 price values
 head(airbnb$price)
 
 
-# initializing a clear data set version 
+# Creating a separate working copy of the dataset 
 airbnb_clean <- airbnb
 
 # Replacing empty price strings with NA
 airbnb_clean$price[airbnb_clean$price == ""] <- NA
-
 # Verifying missing prices
 sum(is.na(airbnb_clean$price))
-
-#converting prices to numerical values
+# Converting prices to numerical values
 # Removing $ and commas
-airbnb_clean$price_numeric <- as.numeric(
-  gsub("[$,]", "", airbnb_clean$price)
-)
+airbnb_clean$price_numeric <- as.numeric(gsub("[$,]", "", airbnb_clean$price))
 
 # Verifying the new data type
 class(airbnb_clean$price_numeric)
@@ -76,54 +72,19 @@ price_missing_by_room
 prop.table(price_missing_by_room, margin = 1) * 100
 
 
-#Price Distribution and Potential Outliers
+# Price Distribution and Potential Outliers
 # Examining descriptive statistics for numerical prices
 summary(airbnb_clean$price_numeric)
-
-#Visualising the price distribution
-# Histogram of Airbnb prices
-ggplot(airbnb_clean, aes(x = price_numeric)) +
-  geom_histogram(bins = 30,
-                 fill = "lightblue",
-                 color = "black") +
-  labs(title = "Distribution of Airbnb Prices in Dublin",
-       x = "Listed Price",
-       y = "Number of Listings") +
-  theme_minimal()
-
-
-# Focused Price Distribution
-
-ggplot(airbnb_clean, aes(x = price_numeric)) +
-  geom_histogram(binwidth = 50,
-                 fill = "lightblue",
-                 color = "black",
-                 na.rm = TRUE) +
-  coord_cartesian(xlim = c(0, 1000)) +
-  labs(title = "Dublin Airbnb Prices: Focused Distribution",
-       x = "Listed Price ($)",
-       y = "Number of Listings") + theme_minimal()
 
 # Counting listings with prices above 1000
 sum(airbnb_clean$price_numeric > 1000, na.rm = TRUE)
 
-# Detecting outliers
-# Focused boxplot to better visualise price outliers
-ggplot(airbnb_clean, aes(x = "All Listings", y = price_numeric)) +
-  geom_boxplot(fill = "lightblue", color = "black", na.rm = TRUE) +
-  coord_cartesian(ylim = c(0, 1000)) +
-  labs(title = "Dublin Airbnb Prices: Focused Boxplot",
-       x = "",
-       y = "Listed Price ($)")+ theme_minimal()
-
-#IQR Outlier Detection
+# IQR Outlier Detection
 # Calculating the first and third quartiles
 q1 <- quantile(airbnb_clean$price_numeric, 0.25, na.rm = TRUE)
 q3 <- quantile(airbnb_clean$price_numeric, 0.75, na.rm = TRUE)
-
 # Calculating the interquartile range
 price_iqr <- IQR(airbnb_clean$price_numeric, na.rm = TRUE)
-
 # Calculating the lower and upper outlier thresholds
 lower_limit <- q1 - 1.5 * price_iqr
 upper_limit <- q3 + 1.5 * price_iqr
@@ -221,10 +182,7 @@ colSums(is.na(selected_features))
 # Checking the dimensions
 dim(selected_features)
 
-#trying to detect the empty fields
-# Checking empty strings 
-sum(airbnb$price == "")
-
+# Checking for empty text fields
 # Checking room type
 sum(selected_features$room_type == "", na.rm = TRUE)
 
